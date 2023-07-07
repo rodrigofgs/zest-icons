@@ -8,8 +8,8 @@ username = "rodrigofgs"
 token = "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"
 
 # Set the repository and folder information
-repository = "https://github.com/rodrigofgs/zest-icons/"
-folder_path = ".icona"
+repository = "zest-icons"
+folder_path = "tree/main/.icona"
 new_folder_name = "icons"
 
 # Construct the API endpoint URL
