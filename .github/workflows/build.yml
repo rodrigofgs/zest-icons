@@ -1,27 +1,33 @@
-yarn add -D @icona/generator
-
-name: Build
-
+# generate svg github action
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push events to the main branch
+      - 'icona-update-**' # only run workflow when icona-update-* branch is updated
+    paths:
+      - '.icona/icons.json' # only run workflow when icons.json is updated
+
+name: Generate SVG files from icons.json
 
 jobs:
-  build:
+  deploy:
+    name: Generate SVG files from icons.json
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14  # Replace with the desired Node.js version
+          node-version: 18
 
-      - name: Install dependencies
-        run: yarn install  # Replace with the command to install dependencies (e.g., npm install)
+      - name: Install Packages
+        run: |
+          yarn install
 
-      - name: Run build script
-        run: node icona.js  # Replace with the command to run your build script
+      - name: Generate Stuffs
+        run: |
+          yarn generate:icona
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "[Icona] Generate Files"
+          git push
