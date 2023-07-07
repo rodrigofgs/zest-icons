@@ -1,3 +1,5 @@
+yarn add -D @icona/generator
+
 name: Build
 
 on:
